@@ -1,6 +1,15 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import * as authService from '../services/authService';
 
+const getAuthErrorMessage = (error) => {
+    if (!error.response) {
+        const apiUrl = import.meta.env.VITE_BACKEND_URL || 'http://localhost:5000';
+        return `No response from ClinicFlow API at ${apiUrl}. Check that the backend is running and that CORS allows this frontend origin.`;
+    }
+
+    return error.response.data?.message || `Request failed with HTTP ${error.response.status}.`;
+};
+
 let storedUser = null;
 try {
     const raw = localStorage.getItem('user');
@@ -17,8 +26,7 @@ export const loginUser = createAsyncThunk(
         try {
             return await authService.login(credentials);
         } catch (error) {
-            const message = error.response?.data?.message || error.message || 'Login failed';
-            return rejectWithValue(message);
+            return rejectWithValue(getAuthErrorMessage(error));
         }
     }
 );
@@ -29,8 +37,7 @@ export const fetchCurrentUser = createAsyncThunk(
         try {
             return await authService.getMe();
         } catch (error) {
-            const message = error.response?.data?.message || error.message;
-            return rejectWithValue(message);
+            return rejectWithValue(getAuthErrorMessage(error));
         }
     }
 );
