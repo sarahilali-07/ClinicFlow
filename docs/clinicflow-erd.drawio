@@ -1,0 +1,40 @@
+<mxfile host="app.diagrams.net" modified="2026-10-27T13:30:00.000Z" agent="VS Code" version="24.7.17" type="device">
+  <diagram id="clinicflow-erd" name="ClinicFlow ERD">
+    <mxGraphModel dx="1100" dy="700" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1100" pageHeight="700" math="0" shadow="0">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+        <mxCell id="users" value="&lt;div style=&quot;font-size:18px;font-weight:bold;padding-bottom:8px;border-bottom:1px solid #cbd5e1&quot;&gt;USERS&lt;/div&gt;&lt;div style=&quot;padding-top:8px;line-height:1.7&quot;&gt;&lt;b&gt;PK&lt;/b&gt; id : UUID&lt;br&gt;first_name : VARCHAR&lt;br&gt;last_name : VARCHAR&lt;br&gt;email : VARCHAR UNIQUE&lt;br&gt;password : VARCHAR&lt;br&gt;role : admin | staff&lt;br&gt;is_active : BOOLEAN&lt;br&gt;created_at, updated_at&lt;/div&gt;" style="rounded=1;arcSize=8;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacingLeft=14;spacingRight=12;spacingTop=14;fillColor=#eff6ff;strokeColor=#3b82f6;strokeWidth=2;fontColor=#0f172a;fontSize=14;" vertex="1" parent="1">
+          <mxGeometry x="70" y="80" width="300" height="250" as="geometry"/>
+        </mxCell>
+        <mxCell id="patients" value="&lt;div style=&quot;font-size:18px;font-weight:bold;padding-bottom:8px;border-bottom:1px solid #cbd5e1&quot;&gt;PATIENTS&lt;/div&gt;&lt;div style=&quot;padding-top:8px;line-height:1.7&quot;&gt;&lt;b&gt;PK&lt;/b&gt; id : UUID&lt;br&gt;full_name : VARCHAR&lt;br&gt;&lt;b&gt;UK&lt;/b&gt; cin : VARCHAR UNIQUE&lt;br&gt;phone : VARCHAR&lt;br&gt;birth_date : DATE&lt;br&gt;address : TEXT (nullable)&lt;br&gt;created_at, updated_at, deleted_at&lt;/div&gt;" style="rounded=1;arcSize=8;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacingLeft=14;spacingRight=12;spacingTop=14;fillColor=#f0fdf4;strokeColor=#22c55e;strokeWidth=2;fontColor=#0f172a;fontSize=14;" vertex="1" parent="1">
+          <mxGeometry x="70" y="390" width="300" height="250" as="geometry"/>
+        </mxCell>
+        <mxCell id="appointments" value="&lt;div style=&quot;font-size:18px;font-weight:bold;padding-bottom:8px;border-bottom:1px solid #cbd5e1&quot;&gt;APPOINTMENTS&lt;/div&gt;&lt;div style=&quot;padding-top:8px;line-height:1.7&quot;&gt;&lt;b&gt;PK&lt;/b&gt; id : UUID&lt;br&gt;&lt;b&gt;FK&lt;/b&gt; patient_id : UUID → patients.id&lt;br&gt;&lt;b&gt;FK&lt;/b&gt; created_by : UUID → users.id&lt;br&gt;appointment_date : TIMESTAMPTZ&lt;br&gt;status : pending | confirmed | cancelled&lt;br&gt;reason : TEXT&lt;br&gt;notes : TEXT (nullable)&lt;br&gt;created_at, updated_at&lt;/div&gt;" style="rounded=1;arcSize=8;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacingLeft=14;spacingRight=12;spacingTop=14;fillColor=#fff7ed;strokeColor=#f97316;strokeWidth=2;fontColor=#0f172a;fontSize=14;" vertex="1" parent="1">
+          <mxGeometry x="640" y="235" width="390" height="290" as="geometry"/>
+        </mxCell>
+        <mxCell id="user-appointment" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#475569;strokeWidth=2;startArrow=ERone;startFill=0;endArrow=ERzeroToMany;endFill=0;exitX=1;exitY=0.5;entryX=0;entryY=0.27;" edge="1" parent="1" source="users" target="appointments">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="patient-appointment" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#475569;strokeWidth=2;startArrow=ERone;startFill=0;endArrow=ERzeroToMany;endFill=0;exitX=1;exitY=0.5;entryX=0;entryY=0.73;" edge="1" parent="1" source="patients" target="appointments">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="user-cardinality-one" value="1" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=#ffffff;fontStyle=1;fontSize=14;" vertex="1" connectable="0" parent="1">
+          <mxGeometry x="410" y="145" width="24" height="24" as="geometry"/>
+        </mxCell>
+        <mxCell id="user-cardinality-many" value="0..N" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=#ffffff;fontStyle=1;fontSize=14;" vertex="1" connectable="0" parent="1">
+          <mxGeometry x="577" y="292" width="48" height="24" as="geometry"/>
+        </mxCell>
+        <mxCell id="patient-cardinality-one" value="1" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=#ffffff;fontStyle=1;fontSize=14;" vertex="1" connectable="0" parent="1">
+          <mxGeometry x="410" y="535" width="24" height="24" as="geometry"/>
+        </mxCell>
+        <mxCell id="patient-cardinality-many" value="0..N" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=#ffffff;fontStyle=1;fontSize=14;" vertex="1" connectable="0" parent="1">
+          <mxGeometry x="577" y="454" width="48" height="24" as="geometry"/>
+        </mxCell>
+        <mxCell id="legend" value="Each appointment is linked to exactly 1 patient and 1 creating user. A patient or user may have 0..N appointments. Both foreign keys use ON DELETE RESTRICT." style="rounded=1;whiteSpace=wrap;html=1;align=center;verticalAlign=middle;fillColor=#f8fafc;strokeColor=#cbd5e1;fontColor=#334155;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="160" y="660" width="780" height="32" as="geometry"/>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

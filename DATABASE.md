@@ -6,47 +6,10 @@ the three required entities: users, patients, and appointments.
 
 ## Entity relationship diagram
 
-```mermaid
-erDiagram
-    USERS ||--o{ APPOINTMENTS : "creates"
-    PATIENTS ||--o{ APPOINTMENTS : "has"
+![ClinicFlow ERD showing users and patients one-to-many with appointments](./docs/clinicflow-erd.svg)
 
-    USERS {
-        uuid id PK
-        string first_name
-        string last_name
-        string email UK
-        string password
-        string role
-        boolean is_active
-        timestamptz created_at
-        timestamptz updated_at
-    }
-
-    PATIENTS {
-        uuid id PK
-        string full_name
-        string cin UK
-        string phone
-        date birth_date
-        text address
-        timestamptz created_at
-        timestamptz updated_at
-        timestamptz deleted_at
-    }
-
-    APPOINTMENTS {
-        uuid id PK
-        uuid patient_id FK
-        timestamptz appointment_date
-        string status
-        text reason
-        text notes
-        uuid created_by FK
-        timestamptz created_at
-        timestamptz updated_at
-    }
-```
+Editable Draw.io source: [`docs/clinicflow-erd.drawio`](./docs/clinicflow-erd.drawio).
+Open the `.drawio` file in VS Code with the Draw.io extension to view or edit it.
 
 ## Relationships and delete rules
 
