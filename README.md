@@ -59,30 +59,63 @@ ClinicFlow/
 
 ### Installation
 
-Clone the repository:
+From the project root, install each application's dependencies in its own folder:
 
-```bash
-git clone https://github.com/sarahilali-07/ClinicFlow.git
-cd ClinicFlow
-```
-
-Install backend dependencies:
-
-```bash
-cd backend
+```powershell
+Set-Location .\backend
 npm install
 ```
 
-Configure your backend environment variables using `backend/.env.example`.
-
-Install frontend dependencies in a separate terminal:
-
-```bash
-cd frontend
+```powershell
+Set-Location .\frontend
 npm install
 ```
 
-Configure the frontend environment using `frontend/.env.example`, then start the backend and frontend using their available npm scripts.
+Configure `backend/.env` from `backend/.env.example` and `frontend/.env` from
+`frontend/.env.example`. The backend variables are `PORT`, `DATABASE_URL`,
+`JWT_SECRET`, `JWT_EXPIRES_IN`, and `CLIENT_URL`. The frontend variable is
+`VITE_BACKEND_URL`. Set `DATABASE_URL` to the PostgreSQL instance you intend to
+use, and use a strong private value for `JWT_SECRET`; do not commit either
+`.env` file.
+
+Create the database if it does not already exist, then apply the schema from the
+project root:
+
+```powershell
+psql -U postgres -c "CREATE DATABASE clinicflow;"
+psql -U postgres -d clinicflow -f backend/src/config/schema.sql
+```
+
+If `clinicflow` already exists, skip the `CREATE DATABASE` command. The schema
+uses `CREATE TABLE IF NOT EXISTS`, so applying it does not clear existing
+records.
+
+To populate the sample users, patients, and appointments, run this from the
+`backend` folder:
+
+```powershell
+npm run seed
+```
+
+**Warning:** the seed script deletes all rows from `appointments`, `patients`,
+and `users` before inserting its sample data. Do not run it against a database
+whose existing data must be preserved.
+
+Start the applications in separate terminals:
+
+```powershell
+Set-Location C:\Users\user\Desktop\project\clinic-management\backend
+npm run dev
+```
+
+```powershell
+Set-Location C:\Users\user\Desktop\project\clinic-management\frontend
+npm run dev
+```
+
+The backend defaults to `http://localhost:5000`; Vite prints the frontend URL
+when it starts. For the database entities and relationship rules, see
+[Database design](./DATABASE.md).
 
 ## 🔒 Security
 
